@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Tạo tin tuyển dụng - IT_Seeker</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/css/magnific-popup.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/themify-icons.css">
+  <link rel="stylesheet" href="/css/nice-select.css">
+  <link rel="stylesheet" href="/css/flaticon.css">
+  <link rel="stylesheet" href="/css/gijgo.css">
+  <link rel="stylesheet" href="/css/animate.min.css">
+  <link rel="stylesheet" href="/css/slicknav.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div th:replace="~{fragments/header}"></div>
+<div class="slider_area">
+  <div class="single_slider d-flex align-items-center slider_bg_1">
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-lg-8">
+          <div class="job_post_form p-4 bg-white rounded shadow">
+
+            <h3 class="text-center mb-4">Tạo tin tuyển dụng mới</h3>
+            <!-- Form đăng bài -->
+            <form th:action="@{/job-post/create}" th:object="${jobPost}" method="post">
+              <div class="form-group mb-3">
+                <label for="title">Tiêu đề công việc</label>
+                <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Nhập tiêu đề" required>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="description">Mô tả công việc</label>
+                <textarea class="form-control" id="description" th:field="*{description}" rows="5" placeholder="Nhập mô tả chi tiết" required></textarea>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="salary">Mức lương ($)</label>
+                <input type="number" step="1000" class="form-control" id="salary" th:field="*{salary}" placeholder="VD: 10000000" required>
+              </div>
+
+              <div class="form-group mb-4">
+                <label for="jobType">Loại hình công việc</label>
+                <select class="form-control" id="jobType" th:field="*{jobType}" required>
+                  <option value="" disabled selected>-- Chọn loại công việc --</option>
+                  <option value="Full-time">Toàn thời gian</option>
+                  <option value="Part-time">Bán thời gian</option>
+                  <option value="Contract">Hợp đồng</option>
+                  <option value="Internship">Thực tập</option>
+                </select>
+              </div>
+
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success">Tạo tin tuyển dụng</button>
+                <a href="/index" class="btn btn-secondary">Hủy</a>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scripts -->
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/isotope.pkgd.min.js"></script>
+<script src="/js/ajax-form.js"></script>
+<script src="/js/waypoints.min.js"></script>
+<script src="/js/jquery.counterup.min.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/scrollIt.js"></script>
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/nice-select.min.js"></script>
+<script src="/js/jquery.slicknav.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/gijgo.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+</body>
+</html>

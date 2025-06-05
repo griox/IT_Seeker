@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - IT_Seeker</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/css/magnific-popup.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/themify-icons.css">
+  <link rel="stylesheet" href="/css/nice-select.css">
+  <link rel="stylesheet" href="/css/flaticon.css">
+  <link rel="stylesheet" href="/css/gijgo.css">
+  <link rel="stylesheet" href="/css/animate.min.css">
+  <link rel="stylesheet" href="/css/slicknav.css">
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="slider_area">
+  <div class="single_slider  d-flex align-items-center slider_bg_1">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7 col-md-6">
+          <div class="container" style="margin-top: 80px;">
+            <div class="row justify-content-center border-0 form-blur">
+              <div class="col-md-10 " >
+                <h3 class="text-center mb-4 mt-3 text-white ">Đăng Ký </h3>
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                <form th:action="@{/register}" th:object="${user}" method="post" enctype="multipart/form-data">
+                  <div class="form-group mb-3">
+                    <label for="userName" style="color: white">Họ và tên</label>
+                    <input type="text" class="form-control" id="userName" th:field="*{userName}" required>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="userEmail" style="color: white">Email</label>
+                    <input type="email" class="form-control" id="userEmail" th:field="*{userEmail}" required>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="userPassword" style="color: white">Mật khẩu</label>
+                    <input type="password" class="form-control" id="userPassword" th:field="*{userPassword}">
+                  </div>
+                  <div id="employerFields" style="display: none;">
+                    <div class="form-group">
+                      <label style="color: white">Ảnh đại diện công ty</label>
+                      <input type="file" class="form-control" id="avatar" name="avatarFile" accept=".jpeg,.png">
+                    </div>
+                    <div class="form-group">
+                      <label style="color: white">Tên công ty</label>
+                      <input type="text" class="form-control" th:field="*{companyName}">
+                    </div>
+                    <div class="form-group">
+                      <label style="color: white">Địa điểm</label>
+                      <input type="text" class="form-control" th:field="*{location}">
+                    </div>
+                  </div>
+                  <div id="jobSeekerFields" style="display: none;">
+                    <div class="form-group mb-3">
+                      <label for="cvFile" style="color: white;">Tải lên CV (PDF, DOC...)</label>
+                      <input type="file" class="form-control" id="cvFile" name="cvFile" accept=".pdf,.doc,.docx,.png">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label style="color: white">Bạn là:</label><br>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" th:field="*{role}" value="Employer" id="employerRadio" required>
+                      <label class="form-check-label" for="employerRadio" style="color: white">Nhà tuyển dụng</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" th:field="*{role}" value="Job_seeker" id="jobSeekerRadio" required>
+                      <label class="form-check-label" for="jobSeekerRadio" style="color: white">Ứng viên</label>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-success w-100">Tạo tài khoản</button>
+                </form>
+                <div class="text-center mt-3">
+                  <p style="color: white">Bạn đã có tài khoản? <a style="color: greenyellow" th:href="@{/login}">Đăng nhập</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ilstration_img wow fadeInRight d-none d-lg-block text-right" data-wow-duration="1s" data-wow-delay=".2s">
+    <img src="/img/banner/illustration.png" alt="">
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer}"></div>
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/isotope.pkgd.min.js"></script>
+<script src="/js/ajax-form.js"></script>
+<script src="/js/waypoints.min.js"></script>
+<script src="/js/jquery.counterup.min.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/scrollIt.js"></script>
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/nice-select.min.js"></script>
+<script src="/js/jquery.slicknav.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/gijgo.min.js"></script>
+
+
+
+<!--contact js-->
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/main.js"></script>
+<script>
+  function toggleForms() {
+    const role = document.querySelector('input[name="role"]:checked').value;
+    document.getElementById('employerFields').style.display = role === 'Employer' ? 'block' : 'none';
+    document.getElementById('jobSeekerFields').style.display = role === 'Job_seeker' ? 'block' : 'none';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('input[name="role"]').forEach(radio => {
+      radio.addEventListener('change', toggleForms);
+    });
+    toggleForms(); // khởi động ban đầu
+  });
+</script>
+
+</body>
+</html>

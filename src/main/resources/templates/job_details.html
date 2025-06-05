@@ -1,0 +1,185 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Job Board</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/css/gijgo.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/slicknav.css}">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- header-start -->
+    <div th:replace="~{fragments/header}"></div>
+    <!-- header-end -->
+
+    <!-- bradcam_area  -->
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3 th:text="${jobDetail.title}"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ bradcam_area  -->
+
+    <div class="job_details_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="job_details_header">
+                        <div class="single_jobs white-bg d-flex justify-content-between">
+                            <div class="jobs_left d-flex align-items-center">
+                                <div class="thumb">
+                                    <img style="width: 150%"  th:src="${jobDetail.employer.avatar}"
+                                         alt="Employer Logo">
+                                </div>
+                                <div class="jobs_conetent">
+                                    <a href="#" th:text="${jobDetail.title}"><h4></h4></a>
+                                    <div class="links_locat d-flex align-items-center">
+                                        <div class="location ">
+                                            <p> <i th:text="${jobDetail.employer.location}" class="fa fa-map-marker mr-1"></i></p>
+                                        </div>
+                                        <div class="location ">
+                                            <p> <i th:text="${jobDetail.jobType}" class="fa fa-clock-o mr-1"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="jobs_right">
+                                <div class="apply_now">
+                                    <a class="heart_mark" href="#"> <i class="ti-heart"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="descript_wrap white-bg">
+                        <div class="single_wrap">
+                            <h4>Mô tả công việc</h4>
+                            <p th:text="${jobDetail.description}"></p>
+                        </div>
+                    </div>
+                    <div class="apply_job_form white-bg">
+                        <h4>Ứng tuyển</h4>
+                        <form th:action="@{/apply}" method="post">
+                            <input type="hidden" name="jobPostId" th:value="${jobDetail.id}" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input_field">
+                                        <textarea name="coverLetter" id="" cols="30" rows="10" placeholder="Đơn xin việc làm"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="submit_btn">
+                                        <button th:if="${appliedJobIds != null and !appliedJobIds.contains(jobDetail.id)}" class="boxed-btn3 w-100" type="submit">Ứng tuyển ngay</button>
+                                        <form th:if="${appliedJobIds != null and appliedJobIds.contains(jobDetail.id)}"
+                                              th:action="@{'/withdraw-application/' + ${jobDetail.id}}"
+                                              method="post" style="display:inline;">
+                                            <button type="submit" class="boxed-btn3" style="background-color: #dc3545;">Rút hồ sơ</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="job_sumary">
+                        <div class="summery_header">
+                            <h3>Tổng quan công việc</h3>
+                        </div>
+                        <div class="job_content">
+                            <ul>
+                                <li>Ngày đăng tuyển:
+                                    <span th:text="${#temporals.format(jobDetail.createdAt, 'dd/MM/yyyy')}"></span>
+                                </li>
+                                <li>Thu nhập:
+                                    <span th:text="${jobDetail.salary} + '$'"></span>
+                                </li>
+                                <li>Vị trí: <span th:text="${jobDetail.employer.location}"></span></li>
+                                <li>Thời gian làm việc: <span th:text="${jobDetail.jobType}"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="share_wrap d-flex">
+                        <span>Share at:</span>
+                        <ul>
+                            <li><a href="#"> <i class="fa fa-facebook"></i></a> </li>
+                            <li><a href="#"> <i class="fa fa-google-plus"></i></a> </li>
+                            <li><a href="#"> <i class="fa fa-twitter"></i></a> </li>
+                            <li><a href="#"> <i class="fa fa-envelope"></i></a> </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer start -->
+    <div th:replace="~{fragments/footer}"></div>
+    <!--/ footer end  -->
+
+    <!-- link that opens popup -->
+    <!-- JS here -->
+    <script th:src="@{/js/vendor/modernizr-3.5.0.min.js}"></script>
+    <script th:src="@{/js/vendor/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/isotope.pkgd.min.js}"></script>
+    <script th:src="@{/js/ajax-form.js}"></script>
+    <script th:src="@{/js/waypoints.min.js}"></script>
+    <script th:src="@{/js/jquery.counterup.min.js}"></script>
+    <script th:src="@{/js/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/js/scrollIt.js}"></script>
+    <script th:src="@{/js/jquery.scrollUp.min.js}"></script>
+    <script th:src="@{/js/wow.min.js}"></script>
+    <script th:src="@{/js/nice-select.min.js}"></script>
+    <script th:src="@{/js/jquery.slicknav.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/plugins.js}"></script>
+    <script th:src="@{/js/gijgo.min.js}"></script>
+
+
+
+    <!--contact js-->
+    <script th:src="@{/js/contact.js}"></script>
+    <script th:src="@{/js/jquery.ajaxchimp.min.js}"></script>
+    <script th:src="@{/js/jquery.form.js}"></script>
+    <script th:src="@{/js/jquery.validate.min.js}"></script>
+    <script th:src="@{/js/mail-script.js}"></script>
+
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+
+</html>

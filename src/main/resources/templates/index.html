@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Job Board</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/gijgo.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+</head>
+
+<body>
+<!-- Modal hiển thị thông báo -->
+<div id="flash-message" class="flash-message" th:if="${message}">
+    <span th:text="${message}">Thông báo mẫu</span>
+</div>
+<style>
+    .flash-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #ffc107;
+        color: #000;
+        padding: 15px 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 9999;
+        font-weight: bold;
+        animation: fadein 0.5s, fadeout 0.5s 4.5s;
+    }
+
+    @keyframes fadein {
+        from {opacity: 0; right: 0;}
+        to {opacity: 1; right: 20px;}
+    }
+
+    @keyframes fadeout {
+        from {opacity: 1; right: 20px;}
+        to {opacity: 0; right: 0;}
+    }
+</style>
+
+
+
+
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- header-start -->
+    <div th:replace="fragments/header"></div>
+    <!-- header-end -->
+
+    <!-- ... giữ nguyên phần <head> -->
+
+    <!-- ... -->
+
+    <!-- slider_area_start -->
+    <div class="slider_area">
+        <div class="single_slider d-flex align-items-center slider_bg_1">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7 col-md-6">
+                        <div class="slider_text">
+                            <h5 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".2s">Hơn 1000+ công việc đang chờ bạn</h5>
+                            <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">Tìm công việc mơ ước của bạn</h3>
+                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">IT_Seeker là nền tảng web hàng đầu bạn có thể tin tưởng cho sự nghiệp</p>
+                            <div class="sldier_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ilstration_img wow fadeInRight d-none d-lg-block text-right" data-wow-duration="1s" data-wow-delay=".2s">
+            <img src="/img/banner/illustration.png" alt="">
+        </div>
+    </div>
+    <!-- slider_area_end -->
+
+    <!-- popular_catagory_area_start  -->
+    <div class="popular_catagory_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section_title mb-40">
+                        <h3>Một vài chuyên ngành IT nổi bật</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xl-3 col-md-6">
+                    <div class="single_catagory">
+                        <a href="/jobs.html"><h4>Phát triển phần mềm</h4></a>
+                        <p> <span>120</span> vị trí đang tuyển</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-md-6">
+                    <div class="single_catagory">
+                        <a href="/jobs.html"><h4>Phát triển Web</h4></a>
+                        <p> <span>95</span> vị trí đang tuyển</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-md-6">
+                    <div class="single_catagory">
+                        <a href="/jobs.html"><h4>Khoa học dữ liệu</h4></a>
+                        <p> <span>80</span> vị trí đang tuyển</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-md-6">
+                    <div class="single_catagory">
+                        <a href="/jobs.html"><h4>Trí tuệ nhân tạo</h4></a>
+                        <p> <span>65</span> vị trí đang tuyển</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-md-6">
+                    <div class="single_catagory">
+                        <a href="/jobs.html"><h4>An ninh mạng</h4></a>
+                        <p> <span>70</span> vị trí đang tuyển</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-md-6">
+                    <div class="single_catagory">
+                        <a href="/jobs.html"><h4>Kiểm thử phần mềm</h4></a>
+                        <p> <span>60</span> vị trí đang tuyển</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-md-6">
+                    <div class="single_catagory">
+                        <a href="/jobs.html"><h4>Quản trị hệ thống</h4></a>
+                        <p> <span>50</span> vị trí đang tuyển</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-md-6">
+                    <div class="single_catagory">
+                        <a href="/jobs.html"><h4>Điện toán đám mây</h4></a>
+                        <p> <span>45</span> vị trí đang tuyển</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- job_searcing_wrap  -->
+    <div class="job_searcing_wrap overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 offset-lg-1 col-md-6">
+                    <div class="searching_text">
+                        <h3>Bạn đang tìm việc?</h3>
+                        <p>Chúng tôi cung cấp hàng nghìn công việc hấp dẫn, duyệt hồ sơ nhanh chóng</p>
+                        <a th:href="@{/go-to-job-posts}" class="boxed-btn3">Xem việc làm</a>
+                    </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1 col-md-6">
+                    <div class="searching_text">
+                        <h3>Bạn đang tìm ứng viên?</h3>
+                        <p>Hãy đăng tin tuyển dụng và tiếp cận hàng ngàn ứng viên tiềm năng</p>
+                        <a th:href="@{/go-to-post-job}" class="boxed-btn3">Đăng tuyển dụng</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- footer start -->
+    <div th:replace="fragments/footer"></div>
+    <!--/ footer end  -->
+
+    <!-- link that opens popup -->
+    <!-- JS here -->
+    <script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/isotope.pkgd.min.js"></script>
+    <script src="/js/ajax-form.js"></script>
+    <script src="/js/waypoints.min.js"></script>
+    <script src="/js/jquery.counterup.min.js"></script>
+    <script src="/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/scrollIt.js"></script>
+    <script src="/js/jquery.scrollUp.min.js"></script>
+    <script src="/js/wow.min.js"></script>
+    <script src="/js/nice-select.min.js"></script>
+    <script src="/js/jquery.slicknav.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/gijgo.min.js"></script>
+
+
+
+
+    <!--contact js-->
+    <script src="/js/contact.js"></script>
+    <script src="/js/jquery.ajaxchimp.min.js"></script>
+    <script src="/js/jquery.form.js"></script>
+    <script src="/js/jquery.validate.min.js"></script>
+    <script src="/js/mail-script.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const flash = document.getElementById("flash-message");
+        if (flash) {
+            setTimeout(() => {
+                flash.remove(); // Xóa thông báo khỏi DOM
+            }, 3000); // 5 giây
+        }
+    });
+</script>
+
+
+
+
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

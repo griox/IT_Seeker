@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chỉnh sửa hồ sơ - IT_Seeker</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/gijgo.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .form-blur {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 30px;
+        }
+        .form-label {
+            color: white;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-primary:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .form-text a {
+            color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- Profile Content -->
+<div class="slider_area">
+    <div class="single_slider d-flex align-items-center slider_bg_1">
+        <div class="container" style="margin-top: 80px;">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="form-blur">
+                        <h3 class="text-center mb-4 text-white">Thông tin của bạn</h3>
+
+                        <!-- Success/Error Messages -->
+                        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+                        <form th:action="@{/update-profile}" th:object="${user}" method="post" enctype="multipart/form-data">
+                            <!-- General Information -->
+                            <div class="form-section">
+                                <div class="mb-3">
+                                    <label for="userName" class="form-label">Tên</label>
+                                    <input type="text" class="form-control" id="userName" th:field="*{userName}" placeholder="Nhập tên của bạn" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="userEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="userEmail" th:field="*{userEmail}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="role" class="form-label">Vai trò</label>
+                                    <input type="text" class="form-control" id="role" th:value="${session.userRole}" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Employer-Specific Information -->
+                            <!-- Employer-Specific Information (2 columns) -->
+                            <div th:if="${session.userRole == 'Employer'}" class="form-section">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="companyName" class="form-label">Tên công ty</label>
+                                        <input type="text" class="form-control" id="companyName" th:field="*{companyName}" placeholder="Nhập tên công ty">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="location" class="form-label">Địa điểm</label>
+                                        <input type="text" class="form-control" id="location" th:field="*{location}" placeholder="Nhập địa điểm công ty">
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label for="avatarFile" class="form-label">Ảnh đại diện công ty</label>
+                                        <input type="file" class="form-control" id="avatarFile" name="avatarFile" accept="image/*">
+                                        <small class="form-text text-muted" th:if="${user.avatar}">
+                                            Hiện tại: <a th:href="@{${user.avatar}}" target="_blank" th:text="${user.avatar}"></a>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Job Seeker-Specific Information -->
+                            <div th:if="${session.userRole == 'Job_seeker'}" class="form-section">
+                                <div class="mb-3">
+                                    <label for="cvFile" class="form-label">Tệp CV</label>
+                                    <input type="file" class="form-control" id="cvFile" name="cvFile" accept=".pdf">
+                                    <small class="form-text text-muted" th:if="${user.cvUrl}">
+                                        Hiện tại: <a th:href="@{${user.cvUrl}}" target="_blank" th:text="${user.cvUrl}"></a>
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary w-100">Cập nhật</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- Scripts -->
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/isotope.pkgd.min.js"></script>
+<script src="/js/ajax-form.js"></script>
+<script src="/js/waypoints.min.js"></script>
+<script src="/js/jquery.counterup.min.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/scrollIt.js"></script>
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/nice-select.min.js"></script>
+<script src="/js/jquery.slicknav.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/gijgo.min.js"></script>
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

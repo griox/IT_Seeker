@@ -1,0 +1,199 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Job Board</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- <link rel="manifest" href="site.webmanifest"> -->
+  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <!-- CSS here -->
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+  <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+  <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+  <link rel="stylesheet" th:href="@{/css/themify-icons.css}">
+  <link rel="stylesheet" th:href="@{/css/nice-select.css}">
+  <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+  <link rel="stylesheet" th:href="@{/css/gijgo.css}">
+  <link rel="stylesheet" th:href="@{/css/animate.min.css}">
+  <link rel="stylesheet" th:href="@{/css/slicknav.css}">
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+</head>
+
+<body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!-- header-start -->
+<div th:replace="~{fragments/header}"></div>
+<!-- header-end -->
+
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="bradcam_text">
+          <h3 th:text="${jobDetail.title}"></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ bradcam_area  -->
+
+<form th:action="@{/update-post/{id}(id=${jobDetail.id})}" th:object="${jobDetail}" method="post">
+  <div class="job_details_area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="job_details_header">
+            <div class="single_jobs white-bg d-flex justify-content-between">
+              <div class="jobs_left d-flex align-items-center">
+                <div class="thumb">
+                  <img style="width: 100%" th:src="${jobDetail.employer.avatar}" alt="Employer Logo">
+                </div>
+                <div class="jobs_conetent">
+                  <input type="text" class="form-control" th:field="*{title}" placeholder="Job Title"/>
+                  <div class="links_locat d-flex align-items-center mt-2">
+                    <div class="location mr-2">
+                      <p th:text="${jobDetail.employer.location}" placeholder="Location"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="descript_wrap white-bg mt-4">
+            <div class="single_wrap">
+              <h4>Mô tả công việc</h4>
+              <textarea class="form-control" rows="10" th:field="*{description}" placeholder="Job Description"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="job_sumary">
+            <div class="summery_header">
+              <h3>Tổng quan công việc</h3>
+            </div>
+            <div class="job_content">
+              <ul>
+                <li>Ngày đăng tuyển:
+                  <input type="text" class="form-control" th:value="${#temporals.format(jobDetail.createdAt, 'dd/MM/yyyy')}" disabled>
+                </li>
+                <li>Thu nhập:
+                  <input type="number" class="form-control" th:field="*{salary}" placeholder="Salary ($)">
+                </li>
+                <li>Vị trí:
+                  <p  th:text="${jobDetail.employer.location}" placeholder="Location"></p>
+                </li>
+                <li>Thời gian làm việc:
+                  <select class="form-control" th:field="*{jobType}">
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Intern">Intern</option>
+                  </select>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nút cập nhật -->
+        <div class="col-12 mt-4 text-center">
+          <button type="submit" class="btn btn-primary">Cập nhật công việc</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="col-12 mt-5">
+  <h2>Danh sách ứng tuyển</h2>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Ứng viên</th>
+      <th>Ngày ứng tuyển</th>
+      <th>Trạng thái</th>
+      <th>Cover Letter</th>
+      <th>Hồ sơ (CV)</th>
+      <th>Quyết định</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="app : ${applications}">
+      <td th:text="${app.jobSeeker.user.userName}">Tên ứng viên</td>
+      <td th:text="${#temporals.format(app.appliedAt, 'dd/MM/yyyy HH:mm')}">Ngày nộp</td>
+      <td th:text="${app.status}">Trạng thái</td>
+      <td th:text="${app.coverLetter}">Cover letter</td>
+      <td>
+        <a style="color: #00D363" th:href="@{'/' + ${app.jobSeeker.cvUrl}}" target="_blank">Xem CV</a>
+      </td>
+      <td>
+        <form th:action="@{/applications/update-status}" method="post" style="display:inline">
+          <input type="hidden" name="applicationId" th:value="${app.id}" />
+          <input type="hidden" name="id" th:value="${jobDetail.id}" />
+          <input type="hidden" name="status" value="Đáp ứng" />
+          <button class="btn btn-success btn-sm" type="submit">Duyệt</button>
+        </form>
+        <form th:action="@{/applications/update-status}" method="post" style="display:inline; margin-left:5px;">
+          <input type="hidden" name="applicationId" th:value="${app.id}" />
+          <input type="hidden" name="id" th:value="${jobDetail.id}" />
+          <input type="hidden" name="status" value="Từ chối" />
+          <button class="btn btn-danger btn-sm" type="submit">Từ chối</button>
+        </form>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<!-- footer start -->
+<div th:replace="~{fragments/footer}"></div>
+<!--/ footer end  -->
+
+<!-- link that opens popup -->
+<!-- JS here -->
+<script th:src="@{/js/vendor/modernizr-3.5.0.min.js}"></script>
+<script th:src="@{/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/isotope.pkgd.min.js}"></script>
+<script th:src="@{/js/ajax-form.js}"></script>
+<script th:src="@{/js/waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.counterup.min.js}"></script>
+<script th:src="@{/js/imagesloaded.pkgd.min.js}"></script>
+<script th:src="@{/js/scrollIt.js}"></script>
+<script th:src="@{/js/jquery.scrollUp.min.js}"></script>
+<script th:src="@{/js/wow.min.js}"></script>
+<script th:src="@{/js/nice-select.min.js}"></script>
+<script th:src="@{/js/jquery.slicknav.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/plugins.js}"></script>
+<script th:src="@{/js/gijgo.min.js}"></script>
+
+
+
+<!--contact js-->
+<script th:src="@{/js/contact.js}"></script>
+<script th:src="@{/js/jquery.ajaxchimp.min.js}"></script>
+<script th:src="@{/js/jquery.form.js}"></script>
+<script th:src="@{/js/jquery.validate.min.js}"></script>
+<script th:src="@{/js/mail-script.js}"></script>
+
+
+<script th:src="@{/js/main.js}"></script>
+</body>
+
+</html>
