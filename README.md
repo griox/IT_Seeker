@@ -4,11 +4,11 @@ IT Seeker là một hệ thống tuyển dụng trực tuyến được phát tr
 🔧 Công nghệ sử dụng:
 
 Java 17
-Spring Boot
-Thymeleaf
-Spring Data JPA (Hibernate)
-MySQL
-Bootstrap 5
+Spring Boot,
+Thymeleaf,
+Spring Data JPA (Hibernate),
+MySQL,
+Bootstrap 5,
 🚀 Tính năng chính:
 
 Đăng ký và đăng nhập cho nhà tuyển dụng và người tìm việc
