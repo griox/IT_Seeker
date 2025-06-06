@@ -3,9 +3,10 @@ package huyquangngo.main.job_hiring.controllers;
 import huyquangngo.main.job_hiring.models.*;
 import huyquangngo.main.job_hiring.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -114,7 +112,7 @@ public class JobPostController {
         return "redirect:/jobCreate";
     }
     @PostMapping("/job-post/create")
-    public String createJobPost(@ModelAttribute JobPost jobPost, HttpSession session) {
+    public String createJobPost(@ModelAttribute @Valid JobPost jobPost, BindingResult result, HttpSession session, Model model) {
         // Get logged-in user details from session
         Long userId = (Long) session.getAttribute("userId");
         String userRole = (String) session.getAttribute("userRole");
@@ -124,18 +122,29 @@ public class JobPostController {
             return "redirect:/login";
         }
 
-        // Get employer details
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        Employer employer = employerRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("Employer not found"));
+        // Validate form data
+        if (result.hasErrors()) {
+            model.addAttribute("errorMessage", "Vui lòng kiểm tra lại thông tin nhập.");
+            return "job-post/create"; // Trả về lại form nếu có lỗi
+        }
 
-        // Set job post details
-        jobPost.setEmployer(employer);
-        jobPost.setCreatedAt(LocalDateTime.now());
+        try {
+            // Get employer details
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            Employer employer = employerRepository.findByUser(user)
+                    .orElseThrow(() -> new RuntimeException("Employer not found"));
 
-        // Save job post
-        jobPostRepository.save(jobPost);
+            // Set job post details
+            jobPost.setEmployer(employer);
+            jobPost.setCreatedAt(LocalDateTime.now());
+
+            // Save job post
+            jobPostRepository.save(jobPost);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Đã có lỗi xảy ra: " + e.getMessage());
+            return "job-post/create"; // Trả về lại form với thông báo lỗi
+        }
 
         return "redirect:/index";
     }

@@ -26,7 +26,7 @@
 
             <h3 class="text-center mb-4">Tạo tin tuyển dụng mới</h3>
             <!-- Form đăng bài -->
-            <form th:action="@{/job-post/create}" th:object="${jobPost}" method="post">
+            <form id="jobPostForm" th:action="@{/job-post/create}" th:object="${jobPost}" method="post">
               <div class="form-group mb-3">
                 <label for="title">Tiêu đề công việc</label>
                 <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Nhập tiêu đề" required>
@@ -34,7 +34,7 @@
 
               <div class="form-group mb-3">
                 <label for="description">Mô tả công việc</label>
-                <textarea class="form-control" id="description" th:field="*{description}" rows="5" placeholder="Nhập mô tả chi tiết" required></textarea>
+                <textarea class="form-control" id="description" th:field="*{description}" rows="5" placeholder="Nhập mô tả chi tiết" ></textarea>
               </div>
 
               <div class="form-group mb-3">
@@ -88,8 +88,27 @@
 <script src="/js/plugins.js"></script>
 <script src="/js/gijgo.min.js"></script>
 <script src="/js/main.js"></script>
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
+<!-- CKEditor -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+  let editorInstance;
+  ClassicEditor
+          .create(document.querySelector('#description'))
+          .then(editor => {
+            editorInstance = editor; // Lưu instance của CKEditor để sử dụng sau
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+  // Đồng bộ dữ liệu CKEditor vào textarea trước khi submit form
+  document.getElementById('jobPostForm').addEventListener('submit', function(event) {
+    if (editorInstance) {
+      editorInstance.updateSourceElement(); // Đồng bộ dữ liệu từ CKEditor vào textarea
+    }
+  });
+</script>
 
 </body>
 </html>

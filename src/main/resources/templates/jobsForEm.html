@@ -83,7 +83,8 @@
                                                 <p>Company: <span th:text="${jobPost.employer.companyName}">FPT Software</span></p>
                                             </div>
                                             <div class="description">
-                                                <p th:text="${#strings.abbreviate(jobPost.description, 100)}">Job description...</p>
+                                                <!-- Tạm thời bỏ #strings.abbreviate và dùng th:utext trực tiếp -->
+                                                <div th:utext="${jobPost.description.length() > 100 ? jobPost.description.substring(0, 100) + '...' : jobPost.description}"></div>
                                             </div>
                                         </div>
                                     </div>

@@ -51,7 +51,7 @@
 </div>
 <!--/ bradcam_area  -->
 
-<form th:action="@{/update-post/{id}(id=${jobDetail.id})}" th:object="${jobDetail}" method="post">
+<form id="updateJobForm" th:action="@{/update-post/{id}(id=${jobDetail.id})}" th:object="${jobDetail}" method="post">
   <div class="job_details_area">
     <div class="container">
       <div class="row">
@@ -76,7 +76,16 @@
           <div class="descript_wrap white-bg mt-4">
             <div class="single_wrap">
               <h4>Mô tả công việc</h4>
-              <textarea class="form-control" rows="10" th:field="*{description}" placeholder="Job Description"></textarea>
+              <textarea class="form-control" id="description" th:field="*{description}" rows="10" placeholder="Job Description"></textarea>
+              <!-- Thêm CKEditor -->
+              <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+              <script>
+                ClassicEditor
+                        .create(document.querySelector('#description'))
+                        .catch(error => {
+                          console.error('CKEditor error:', error);
+                        });
+              </script>
             </div>
           </div>
         </div>
@@ -94,7 +103,7 @@
                   <input type="number" class="form-control" th:field="*{salary}" placeholder="Salary ($)">
                 </li>
                 <li>Vị trí:
-                  <p  th:text="${jobDetail.employer.location}" placeholder="Location"></p>
+                  <p th:text="${jobDetail.employer.location}" placeholder="Location"></p>
                 </li>
                 <li>Thời gian làm việc:
                   <select class="form-control" th:field="*{jobType}">
@@ -153,7 +162,6 @@
         </form>
       </td>
     </tr>
-
     </tbody>
   </table>
 </div>
@@ -162,7 +170,6 @@
 <div th:replace="~{fragments/footer}"></div>
 <!--/ footer end  -->
 
-<!-- link that opens popup -->
 <!-- JS here -->
 <script th:src="@{/js/vendor/modernizr-3.5.0.min.js}"></script>
 <script th:src="@{/js/vendor/jquery-1.12.4.min.js}"></script>
@@ -183,8 +190,6 @@
 <script th:src="@{/js/plugins.js}"></script>
 <script th:src="@{/js/gijgo.min.js}"></script>
 
-
-
 <!--contact js-->
 <script th:src="@{/js/contact.js}"></script>
 <script th:src="@{/js/jquery.ajaxchimp.min.js}"></script>
@@ -192,8 +197,17 @@
 <script th:src="@{/js/jquery.validate.min.js}"></script>
 <script th:src="@{/js/mail-script.js}"></script>
 
-
 <script th:src="@{/js/main.js}"></script>
+
+<!-- Đảm bảo đồng bộ dữ liệu CKEditor khi submit -->
+<script>
+  document.getElementById('updateJobForm').addEventListener('submit', function(event) {
+    let descriptionEditor = ClassicEditor.instances['description'];
+    if (descriptionEditor) {
+      descriptionEditor.updateSourceElement(); // Đồng bộ dữ liệu từ CKEditor vào textarea
+    }
+  });
+</script>
 </body>
 
 </html>
