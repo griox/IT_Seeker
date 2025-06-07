@@ -63,7 +63,7 @@
                             <div class="single_jobs white-bg d-flex justify-content-between">
                                 <div class="jobs_left d-flex align-items-center">
                                     <div class="thumb">
-                                        <img style="width: 150%" th:src="${jobPost.employer.avatar}" alt="Employer Logo">
+                                        <img style="width: 100%" th:src="${jobPost.employer.avatar}" alt="Employer Logo">
                                     </div>
                                     <div class="jobs_conetent">
                                         <a th:href="@{'/job-details/' + ${jobPost.id}}"><h4 th:text="${jobPost.title}">Software Engineer</h4></a>
