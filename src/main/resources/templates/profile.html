@@ -78,7 +78,7 @@
                                 </div>
                             </div>
 
-                            <!-- Employer-Specific Information -->
+
                             <!-- Employer-Specific Information (2 columns) -->
                             <div th:if="${session.userRole == 'Employer'}" class="form-section">
                                 <div class="row">
@@ -93,7 +93,7 @@
                                     <div class="col-md-12 mb-3">
                                         <label for="avatarFile" class="form-label">Ảnh đại diện công ty</label>
                                         <input type="file" class="form-control" id="avatarFile" name="avatarFile" accept="image/*">
-                                        <small class="form-text text-muted" th:if="${user.avatar}">
+                                        <small  class="form-text text-muted text-white" th:if="${user.avatar}">
                                             Hiện tại: <a th:href="@{${user.avatar}}" target="_blank" th:text="${user.avatar}"></a>
                                         </small>
                                     </div>
